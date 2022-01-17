@@ -3,3 +3,6 @@
 ^LICENSE\.md$
 ^\.pre-commit-config\.yaml$
 ^\.lintr$
+^appveyor\.yml$
+^\.github$
+^codecov\.yml$
