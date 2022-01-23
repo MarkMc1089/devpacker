@@ -9,6 +9,14 @@ Description: Initialise a blank R package with test directories,
 License: MIT + file LICENSE
 URL: https://github.com/MarkMc1089/devpacker
 BugReports: https://github.com/MarkMc1089/devpacker/issues
+Imports: 
+    gert,
+    gh,
+    glue,
+    precommit,
+    usethis,
+    utils,
+    withr
 Suggests: 
     covr,
     testthat (>= 3.0.0)
