@@ -56,14 +56,16 @@ create_package <- function(path, ..., open = FALSE) {
     repo_desc <- usethis:::package_data()$Title
     repo_desc <- gsub("\n", " ", repo_desc)
     repo_spec <- glue::glue("{owner}/{repo_name}") # Exclude Linting
-    usethis::ui_done("Creating GitHub repository {ui_value(repo_spec)}")
+    usethis::ui_done("Creating GitHub repository {usethis::ui_value(repo_spec)}")
     create <- gh::gh("POST /user/repos", name = repo_name, description = repo_desc)
     origin_url <- switch(protocol,
       https = create$clone_url,
       ssh = create$ssh_url
     )
     withr::defer(usethis:::view_url(create$html_url))
-    usethis::ui_done("Setting remote {ui_value('origin')} to {ui_value(origin_url)}")
+    usethis::ui_done(
+      "Setting remote {usethis::ui_value('origin')} to {usethis::ui_value(origin_url)}"
+    )
     usethis::use_git_remote("origin", origin_url)
     default_branch <- usethis::git_branch_default() # Exclude Linting
     remref <- glue::glue("origin/{default_branch}") # Exclude Linting
