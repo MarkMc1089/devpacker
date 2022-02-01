@@ -69,6 +69,9 @@ devpacker::createpackage("path/to/new/package")
 
 ## TODO
 
-1. Add configuration - currently there is none.
-2. Automate the updating of roxygen dependencies for `precommit`.
-3. Extend the package by adding a similar function for `shiny`, making use of best practices like modules and tools like `golem`.
+1. Add tests.
+2. Add configuration - currently there is none.
+3. Automate the updating of roxygen dependencies for `precommit`.
+4. Extend the package by adding a similar function for `shiny`, making use of best practices like modules and tools like `golem`.
+
+
