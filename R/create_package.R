@@ -45,6 +45,13 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
     usethis::use_build_ignore(".lintr")
   }
 
+  if (use_git) {
+    gert::git_init(usethis::proj_get())
+    usethis::use_git_ignore(".Rhistory")
+    gert::git_add(".")
+    gert::git_commit("Initial commit")
+  }
+
   if (use_precommit) {
     precommit::use_precommit(
       config_source = system.file(
@@ -53,13 +60,6 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
       ),
       open = FALSE, ci = NA
     )
-  }
-
-  if (use_git) {
-    gert::git_init(usethis::proj_get())
-    usethis::use_git_ignore(".Rhistory")
-    gert::git_add(".")
-    gert::git_commit("Initial commit")
   }
 
   use_gh <- function() {
