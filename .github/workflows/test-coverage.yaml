@@ -25,6 +25,10 @@ jobs:
         with:
           extra-packages: covr
 
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+
       - name: Test coverage
         run: covr::codecov()
         shell: Rscript {0}
