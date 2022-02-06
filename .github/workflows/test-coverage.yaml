@@ -31,7 +31,7 @@ jobs:
           token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: Install precommit framework
-        run: precommit::install_procommit()
+        run: precommit::install_precommit()
         shell: Rscript {0}
       
       - name: Test coverage
