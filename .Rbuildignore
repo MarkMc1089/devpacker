@@ -5,4 +5,3 @@
 ^\.lintr$
 ^\.github$
 ^codecov\.yml$
-^tests/testthat\.R$

@@ -7,8 +7,9 @@ check_dependent_args <- function(arg, dependent_args) {
       "set to {usethis::ui_code('TRUE')}"
     )
     usethis::ui_oops(msg_template)
+
     FALSE
-    } else {
-      TRUE
-    }
+  } else {
+    TRUE
+  }
 }

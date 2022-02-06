@@ -13,10 +13,8 @@ test_that("check_dependent_args_works", {
   expect_equal(
     create_package(tmp_pkg, TRUE, FALSE, TRUE, FALSE), FALSE
   )
-  testthat::skip_on_ci()
   expect_equal(
     basename(create_package(tmp_pkg, TRUE, FALSE, FALSE, TRUE)), "tmppkg"
   )
   unlink(tmp_pkg, recursive = TRUE)
-  usethis::proj_get()
 })

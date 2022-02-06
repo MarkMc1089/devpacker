@@ -27,16 +27,18 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
                            use_ci = use_github, use_precommit = use_ci,
                            use_coverage = use_ci, use_lintr = TRUE,
                            use_tests = TRUE, ..., open = FALSE) {
-  if (!check_create_package_args(as.list(match.call())[3:6])) {
+  if (!check_create_package_args(as.list(environment())[2:5])) {
     return(invisible(FALSE))
   }
+
+  on.exit(if (!open) usethis::proj_get())
 
   usethis::create_package(path, ..., open = open)
   usethis::local_project(path)
 
   usethis::use_mit_license()
 
-  file.copy(system.file("basefiles", "functions.R", package = "devpacker"), ".")
+  file.copy(system.file("basefiles", "functions.R", package = "devpacker"), "R")
   if (use_tests) usethis::use_test("functions", open = FALSE)
 
   if (use_lintr) {

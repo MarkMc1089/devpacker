@@ -16,7 +16,8 @@ Imports:
     precommit,
     usethis,
     utils,
-    withr
+    withr,
+    git2r
 Suggests: 
     covr,
     testthat (>= 3.0.0),

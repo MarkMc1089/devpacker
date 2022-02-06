@@ -106,9 +106,9 @@ devpacker::createpackage("path/to/new/package")
 
 ## TODO
 
-- [ ] Add tests.
+- [x] Add  some tests.
 - [x] Add configuration - currently there is none.
 - [ ] Automate the updating of roxygen dependencies for `precommit`.
+- [ ] Use the templating functions of `usethis` to handle various config files used.
 - [ ] Extend the package by adding a similar function for `shiny`, making use of best practices like modules and tools like `golem`.
-
-
+- [ ] Increase test coverage.
