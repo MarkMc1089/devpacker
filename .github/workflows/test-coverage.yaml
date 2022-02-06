@@ -12,6 +12,8 @@ jobs:
   test-coverage:
     runs-on: ubuntu-latest
     env:
+      ACTIONS_RUNNER_DEBUG: true
+      ACTIONS_STEP_DEBUG: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
