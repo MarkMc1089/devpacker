@@ -30,6 +30,10 @@ jobs:
           global: true
           token: '${{ secrets.GITHUB_TOKEN }}'
 
+      - name: Install precommit framework
+        run: precommit::install_procommit()
+        shell: Rscript {0}
+      
       - name: Test coverage
         run: covr::codecov()
         shell: Rscript {0}
