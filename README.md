@@ -23,7 +23,7 @@ styler
 covr
 ```
 
-## Project setup
+## 'I Want it All!' Project setup
 
 Given a `path`, `createpackage()` will create an R package. The actions taken are:
 
@@ -39,6 +39,43 @@ Given a `path`, `createpackage()` will create an R package. The actions taken ar
 10. Sets up code coverage with `covr`, to use the codecov service.
 11. Adds GitHub Actions for running R CMD CHECK and code coverage report on commits. Badges for these are added to the README.
 12. A final push to GitHub is made.
+
+## Custom Project Setup
+
+```
+create_package(
+  path,                    # A path - if it does not exist, it is created, provided that the parent path exists
+  use.git = TRUE,          # initialise and commit everything to a local git repository
+  use.github = use.git,    # create and push to a new repository on Github, along with a starting README
+  use.ci = use.github,     # set up a CI action with GitHub Actions to run R CMD CHECK on each push
+  use.precommit = use.ci,  # set up precommit to automatically perform styling and checks before each commit
+  use.coverage = use.ci,   # set up code coverage, and if using GitHub, adds a CI action using Codecov service
+  use.lintr = TRUE,        # set up lintr
+  use.tests = TRUE,        # set up testthat
+  fields = list(),         # usethis option for setting DESCRIPTION fields - for better option see below
+  roxygen = TRUE,          # usethis option to use roxygen (for automating a lot of documentation tasks) or not
+  check_name = TRUE,       # usethis option to check valid name for CRAN
+  open = FALSE             # set to TRUE if you want to immediately open your new project
+)
+```
+
+## Setting Default DESCRIPTION Fields
+
+From the documentation for `usethis::use_description`:
+
+If you create a lot of packages, consider storing personalized defaults as a named list in an option named `usethis.description`. Here's an example of code to include in `.Rprofile`, which can be opened via `usethis::edit_r_profile()`:
+
+```
+options(
+  usethis.description = list(
+    `Authors@R` = 'person("Jane", "Doe", email = "jane@example.com",
+                          role = c("aut", "cre"),
+                          comment = c(ORCID = "YOUR-ORCID-ID"))',
+    License = "MIT + file LICENSE",
+    Language =  "es"
+  )
+)
+```
 
 ## Development lifecycle
 
@@ -69,9 +106,9 @@ devpacker::createpackage("path/to/new/package")
 
 ## TODO
 
-1. Add tests.
-2. Add configuration - currently there is none.
-3. Automate the updating of roxygen dependencies for `precommit`.
-4. Extend the package by adding a similar function for `shiny`, making use of best practices like modules and tools like `golem`.
+- [ ] Add tests.
+- [x] Add configuration - currently there is none.
+- [ ] Automate the updating of roxygen dependencies for `precommit`.
+- [ ] Extend the package by adding a similar function for `shiny`, making use of best practices like modules and tools like `golem`.
 
 

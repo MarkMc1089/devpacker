@@ -4,7 +4,18 @@
 \alias{create_package}
 \title{Create a package}
 \usage{
-create_package(path, ..., open = FALSE)
+create_package(
+  path,
+  use_git = TRUE,
+  use_github = use_git,
+  use_ci = use_github,
+  use_precommit = use_ci,
+  use_coverage = use_ci,
+  use_lintr = TRUE,
+  use_tests = TRUE,
+  ...,
+  open = FALSE
+)
 }
 \arguments{
 \item{path}{A path. If it exists, it is used. If it does not exist, it is
@@ -18,6 +29,26 @@ created, provided that the parent path exists.}
 \item If on RStudio server, the current RStudio project is activated.
 \item Otherwise, the working directory and active project is changed.
 }}
+
+\item{use.git}{Initialise and make initial commits to a local git
+repository. By default is \code{TRUE}.}
+
+\item{use.github}{Create and push to a GitHub repository. By default takes
+value of \code{use.git}. If set to \code{TRUE}, \code{use.git} must also be \code{TRUE}.}
+
+\item{use.ci}{Set up a GitHub Action job to run R CMD CHECK. By default takes
+value of \code{use.github}. If set to \code{TRUE}, \code{use.github} must also be \code{TRUE}.}
+
+\item{use.precommit}{Set up \code{precommit} to run checks before any commit. By
+default takes value of \code{use.ci}. If set to \code{TRUE}, \code{use.git} must also
+be \code{TRUE}.}
+
+\item{use.coverage}{Set up \code{covr} and, if using GitHub, a GitHub Action to run
+code coverage and use the Codecov service. By default takes value of \code{use.ci}.}
+
+\item{use.lintr}{Set up lintr. By default is \code{TRUE}.}
+
+\item{use.tests}{Set up testthat. By default is \code{TRUE}.}
 }
 \value{
 The path to the created package, invisibly.
