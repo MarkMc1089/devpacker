@@ -45,13 +45,13 @@ Given a `path`, `createpackage()` will create an R package. The actions taken ar
 ```
 create_package(
   path,                    # A path - if it does not exist, it is created, provided that the parent path exists
-  use.git = TRUE,          # initialise and commit everything to a local git repository
-  use.github = use.git,    # create and push to a new repository on Github, along with a starting README
-  use.ci = use.github,     # set up a CI action with GitHub Actions to run R CMD CHECK on each push
-  use.precommit = use.ci,  # set up precommit to automatically perform styling and checks before each commit
-  use.coverage = use.ci,   # set up code coverage, and if using GitHub, adds a CI action using Codecov service
-  use.lintr = TRUE,        # set up lintr
-  use.tests = TRUE,        # set up testthat
+  use_git = TRUE,          # initialise and commit everything to a local git repository
+  use_github = use_git,    # create and push to a new repository on Github, along with a starting README
+  use_ci = use_github,     # set up a CI action with GitHub Actions to run R CMD CHECK on each push
+  use_precommit = use_ci,  # set up precommit to automatically perform styling and checks before each commit
+  use_coverage = use_ci,   # set up code coverage, and if using GitHub, adds a CI action using Codecov service
+  use_lintr = TRUE,        # set up lintr
+  use_tests = TRUE,        # set up testthat
   fields = list(),         # usethis option for setting DESCRIPTION fields - for better option see below
   roxygen = TRUE,          # usethis option to use roxygen (for automating a lot of documentation tasks) or not
   check_name = TRUE,       # usethis option to check valid name for CRAN

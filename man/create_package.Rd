@@ -21,6 +21,26 @@ create_package(
 \item{path}{A path. If it exists, it is used. If it does not exist, it is
 created, provided that the parent path exists.}
 
+\item{use_git}{Initialise and make initial commits to a local git
+repository. By default is \code{TRUE}.}
+
+\item{use_github}{Create and push to a GitHub repository. By default takes
+value of \code{use_git}. If set to \code{TRUE}, \code{use_git} must also be \code{TRUE}.}
+
+\item{use_ci}{Set up a GitHub Action job to run R CMD CHECK. By default takes
+value of \code{use_github}. If set to \code{TRUE}, \code{use_github} must also be \code{TRUE}.}
+
+\item{use_precommit}{Set up \code{precommit} to run checks before any commit. By
+default takes value of \code{use_ci}. If set to \code{TRUE}, \code{use_git} must also
+be \code{TRUE}.}
+
+\item{use_coverage}{Set up \code{covr} and, if using GitHub, a GitHub Action to run
+code coverage and use the Codecov service. By default takes value of \code{use_ci}.}
+
+\item{use_lintr}{Set up lintr. By default is \code{TRUE}.}
+
+\item{use_tests}{Set up testthat. By default is \code{TRUE}.}
+
 \item{...}{Additional arguments passed to \code{usethis::create_package()}}
 
 \item{open}{If \code{TRUE}, \link[usethis:proj_activate]{activates} the new project:
@@ -29,26 +49,6 @@ created, provided that the parent path exists.}
 \item If on RStudio server, the current RStudio project is activated.
 \item Otherwise, the working directory and active project is changed.
 }}
-
-\item{use.git}{Initialise and make initial commits to a local git
-repository. By default is \code{TRUE}.}
-
-\item{use.github}{Create and push to a GitHub repository. By default takes
-value of \code{use.git}. If set to \code{TRUE}, \code{use.git} must also be \code{TRUE}.}
-
-\item{use.ci}{Set up a GitHub Action job to run R CMD CHECK. By default takes
-value of \code{use.github}. If set to \code{TRUE}, \code{use.github} must also be \code{TRUE}.}
-
-\item{use.precommit}{Set up \code{precommit} to run checks before any commit. By
-default takes value of \code{use.ci}. If set to \code{TRUE}, \code{use.git} must also
-be \code{TRUE}.}
-
-\item{use.coverage}{Set up \code{covr} and, if using GitHub, a GitHub Action to run
-code coverage and use the Codecov service. By default takes value of \code{use.ci}.}
-
-\item{use.lintr}{Set up lintr. By default is \code{TRUE}.}
-
-\item{use.tests}{Set up testthat. By default is \code{TRUE}.}
 }
 \value{
 The path to the created package, invisibly.

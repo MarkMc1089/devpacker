@@ -6,19 +6,19 @@
 #' @param path A path. If it exists, it is used. If it does not exist, it is
 #'   created, provided that the parent path exists.
 #' @param ... Additional arguments passed to `usethis::create_package()`
-#' @param use.git Initialise and make initial commits to a local git
+#' @param use_git Initialise and make initial commits to a local git
 #'   repository. By default is `TRUE`.
-#' @param use.github Create and push to a GitHub repository. By default takes
-#'   value of `use.git`. If set to `TRUE`, `use.git` must also be `TRUE`.
-#' @param use.ci Set up a GitHub Action job to run R CMD CHECK. By default takes
-#'   value of `use.github`. If set to `TRUE`, `use.github` must also be `TRUE`.
-#' @param use.precommit Set up `precommit` to run checks before any commit. By
-#'   default takes value of `use.ci`. If set to `TRUE`, `use.git` must also
+#' @param use_github Create and push to a GitHub repository. By default takes
+#'   value of `use_git`. If set to `TRUE`, `use_git` must also be `TRUE`.
+#' @param use_ci Set up a GitHub Action job to run R CMD CHECK. By default takes
+#'   value of `use_github`. If set to `TRUE`, `use_github` must also be `TRUE`.
+#' @param use_precommit Set up `precommit` to run checks before any commit. By
+#'   default takes value of `use_ci`. If set to `TRUE`, `use_git` must also
 #'   be `TRUE`.
-#' @param use.coverage Set up `covr` and, if using GitHub, a GitHub Action to run
-#'   code coverage and use the Codecov service. By default takes value of `use.ci`.
-#' @param use.lintr Set up lintr. By default is `TRUE`.
-#' @param use.tests Set up testthat. By default is `TRUE`.
+#' @param use_coverage Set up `covr` and, if using GitHub, a GitHub Action to run
+#'   code coverage and use the Codecov service. By default takes value of `use_ci`.
+#' @param use_lintr Set up lintr. By default is `TRUE`.
+#' @param use_tests Set up testthat. By default is `TRUE`.
 #' @inheritParams usethis::create_package
 #' @return The path to the created package, invisibly.
 #'
@@ -122,16 +122,16 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
 }
 
 check_create_package_args <- function(args) {
-  # use.git dependency of use.github and use.ci
-  if (!devpacker::check_dependent_args(args[1], args[2:3])) {
+  # use_git dependency of use_github and use_ci
+  if (!check_dependent_args(args[1], args[2:3])) {
     return(invisible(FALSE))
   }
-  # use.github dependency of use.ci
-  if (!devpacker::check_dependent_args(args[2], args[3])) {
+  # use_github dependency of use_ci
+  if (!check_dependent_args(args[2], args[3])) {
     return(invisible(FALSE))
   }
-  # use.git dependency of use.precommit
-  if (!devpacker::check_dependent_args(args[1], args[4])) {
+  # use_git dependency of use_precommit
+  if (!check_dependent_args(args[1], args[4])) {
     return(invisible(FALSE))
   }
   TRUE
