@@ -16,6 +16,15 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
     steps:
       - uses: actions/checkout@v2
+      
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          global: true
+          token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Install precommit framework
+        run: precommit::install_precommit()
+        shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r@v1
         with:
@@ -38,4 +47,3 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
