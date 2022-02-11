@@ -23,7 +23,7 @@ styler
 covr
 ```
 
-## 'I Want it All!' Project setup
+## 'I Want it All!' Project Setup
 
 Given a `path`, `createpackage()` will create an R package. The actions taken are:
 
@@ -77,7 +77,7 @@ options(
 )
 ```
 
-## Development lifecycle
+## Development Lifecycle
 
 1. Choose a name for the package. Can use `available::available("potentialpackagename")` to find existing packages and any potential unwanted associations. MUST use A-z0-9. Best practice is to use all [lowercase letters](https://r-pkgs.org/workflows101.html#naming).
 2. Run `devpacker::createpackage("path/to/awesomepackagename")`.

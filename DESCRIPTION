@@ -17,7 +17,8 @@ Imports:
     usethis,
     utils,
     withr,
-    git2r
+    git2r,
+    here
 Suggests: 
     covr,
     testthat (>= 3.0.0),
