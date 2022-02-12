@@ -7,6 +7,7 @@ _Initialise A Blank R Package With Good Practice Configuration_
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![R-CMD-check](https://github.com/MarkMc1089/devpacker/workflows/R-CMD-check/badge.svg)](https://github.com/MarkMc1089/devpacker/actions)
 [![Codecov test coverage](https://codecov.io/gh/MarkMc1089/devpacker/branch/master/graph/badge.svg)](https://codecov.io/gh/MarkMc1089/devpacker?branch=master)
 <!-- badges: end -->
@@ -53,7 +54,7 @@ create_package(
   use_lintr = TRUE,        # set up lintr
   use_tests = TRUE,        # set up testthat
   fields = list(),         # usethis option for setting DESCRIPTION fields - for better option see below
-  roxygen = TRUE,          # usethis option to use roxygen (for automating a lot of documentation tasks) or not
+  roxygen = TRUE,          # usethis option to use roxygen (for automating a lot of documentation tasks)
   check_name = TRUE,       # usethis option to check valid name for CRAN
   open = FALSE             # set to TRUE if you want to immediately open your new project
 )
