@@ -18,7 +18,8 @@ Imports:
     utils,
     withr,
     git2r,
-    here
+    here,
+    fs
 Suggests: 
     covr,
     testthat (>= 3.0.0),

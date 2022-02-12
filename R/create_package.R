@@ -31,8 +31,6 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
     return(invisible(FALSE))
   }
 
-  on.exit(if (!open) usethis::proj_get())
-
   usethis::create_package(path, ..., open = open)
   usethis::local_project(path)
 
@@ -48,7 +46,7 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
   }
 
   if (use_git) {
-    gert::git_init(usethis::proj_get())
+    gert::git_init()
     usethis::use_git_ignore(".Rhistory")
     gert::git_add(".")
     gert::git_commit("Initial commit")
@@ -60,7 +58,7 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
         "config", "pre-commit-config.yaml",
         package = "devpacker"
       ),
-      open = FALSE, ci = NA
+      open = FALSE, ci = NA, root = usethis::proj_get()
     )
   }
 
@@ -126,15 +124,15 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
 check_create_package_args <- function(args) {
   # use_git dependency of use_github and use_ci
   if (!check_dependent_args(args[1], args[2:3])) {
-    return(invisible(FALSE))
+    return(FALSE)
   }
   # use_github dependency of use_ci
   if (!check_dependent_args(args[2], args[3])) {
-    return(invisible(FALSE))
+    return(FALSE)
   }
   # use_git dependency of use_precommit
   if (!check_dependent_args(args[1], args[4])) {
-    return(invisible(FALSE))
+    return(FALSE)
   }
   TRUE
 }
