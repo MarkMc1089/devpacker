@@ -1,20 +1,24 @@
 # All available hooks: https://pre-commit.com/hooks.html
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
-# -   repo: local
-#     hooks:
-#     -   id: hooks-config-to-inst
-#         name: hooks-config-to-inst
-#         entry: Rscript inst/hooks/local/hooks-config-to-inst.R
-#         language: r
-#         stages: [commit, push]
-#         additional_dependencies:
-#         -    fs
-#         require_serial: True
-# -   repo: https://github.com/MarkMc1089/devpacker
-#     rev: v0.0.0.9000
-#     hooks:
-#     -   id: roxygen-dependencies
+-   repo: local
+    hooks:
+    -   id: hooks-config-to-inst
+        name: hooks-config-to-inst
+        entry: Rscript inst/hooks/local/hooks-config-to-inst.R
+        language: r
+        stages: [commit, push]
+        additional_dependencies:
+        -    fs
+        require_serial: True
+-   repo: https://github.com/lorenzwalthert/precommit
+    rev: v0.2.2.9009
+    hooks:
+    -   id: use-tidy-description
+-   repo: https://github.com/MarkMc1089/devpacker
+    rev: v0.0.0.9000
+    hooks:
+    -   id: roxygen-dependencies
 -   repo: https://github.com/lorenzwalthert/precommit
     rev: v0.2.2.9009
     hooks:
