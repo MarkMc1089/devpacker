@@ -22,8 +22,11 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v1
         with:
-          extra-packages: curl
           use-public-rspm: true
+
+      - name: Install dependencies
+      run: |
+        sudo apt-get install libcurl4-openssl-dev
 
       - name: Cache packages
         uses: actions/cache@v1
