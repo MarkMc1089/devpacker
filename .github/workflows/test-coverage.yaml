@@ -2,9 +2,9 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [main, master]
+    branches: [master]
   pull_request:
-    branches: [main, master]
+    branches: [master]
 
 name: test-coverage
 
@@ -21,6 +21,20 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Cache packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+
+      - name: Restore packages
+        shell: Rscript {0}
+        run: |
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          renv::restore()
+
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: covr
@@ -33,7 +47,7 @@ jobs:
       - name: Install precommit framework
         run: precommit::install_precommit()
         shell: Rscript {0}
-      
+
       - name: Test coverage
         run: covr::codecov()
         shell: Rscript {0}
