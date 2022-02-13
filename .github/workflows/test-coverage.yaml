@@ -25,6 +25,7 @@ jobs:
       - name: Cache packages
         uses: actions/cache@v1
         with:
+          extra-packages: curl
           path: ${{ env.RENV_PATHS_ROOT }}
           key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
           restore-keys: |
@@ -35,8 +36,6 @@ jobs:
         run: |
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
           renv::restore()
-        with:
-          extra-packages: curl
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
