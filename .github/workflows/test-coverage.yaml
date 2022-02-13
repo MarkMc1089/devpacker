@@ -20,6 +20,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v1
         with:
+          extra-packages: curl
           use-public-rspm: true
 
       - name: Cache packages
