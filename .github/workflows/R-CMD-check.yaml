@@ -22,6 +22,13 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Install system dependencies
+        run: |
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'cat(remotes::system_requirements("ubuntu", "20.04"), sep = "\n")')
+
       - name: Cache packages
         uses: actions/cache@v1
         with:
@@ -35,6 +42,8 @@ jobs:
         run: |
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
           renv::restore()
+        with:
+          extra-packages: curl
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:

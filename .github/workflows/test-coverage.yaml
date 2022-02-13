@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      RENV_PATHS_ROOT: ~/.local/share/renv
 
     steps:
       - uses: actions/checkout@v2
@@ -34,6 +35,8 @@ jobs:
         run: |
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
           renv::restore()
+        with:
+          extra-packages: curl
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
