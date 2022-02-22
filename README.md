@@ -87,7 +87,7 @@ options(
 5. When using a package for the first time - `usethis::use_package("packagename")` to add it to imports in `DESCRIPTION`.
 6. Use functions from packages by pre-pending them with `packagename::`, or, especially if you use a lot of functions from a package, add `@import packagename` into the roxygen documentation block of a function to avoid need for the `::` syntax.
 7. Regularly commit to git, at least locally. This is just good practice anyway, but with `precommit` running automated tests and styling your code consistently regular committing helps to prevent the complexity of having to resolve many bugs all in one go!
-8. There is a step that is needed to keep the `pre-commit_config.yaml` up to date. Any packages that your package imports need to be added to this. Use `precommit::snippet_generate('additional-deps-roxygenize')` to generate the needed config before committing, if you have added any packages since last commit.
+8. ~~There is a step that is needed to keep the `pre-commit_config.yaml` up to date. Any packages that your package imports need to be added to this. Use `precommit::snippet_generate('additional-deps-roxygenize')` to generate the needed config before committing, if you have added any packages since last commit.~~ A precommit hook now takes care of this.
 
 ## Installation
 
@@ -109,7 +109,7 @@ devpacker::createpackage("path/to/new/package")
 
 - [x] Add  some tests.
 - [x] Add configuration - currently there is none.
-- [ ] Automate the updating of roxygen dependencies for `precommit`.
+- [x] Automate the updating of roxygen dependencies for `precommit`. DONE IN FORK OF [lorenzwalthert/precommit](https://github.com/lorenzwalthert/precommit)
 - [ ] Use the templating functions of `usethis` to handle various config files used.
 - [ ] Extend the package by adding a similar function for `shiny`, making use of best practices like modules and tools like `golem`.
 - [ ] Increase test coverage.
