@@ -1,5 +1,3 @@
-^renv$
-^renv\.lock$
 ^devpacker\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
@@ -7,4 +5,3 @@
 ^\.lintr$
 ^\.github$
 ^codecov\.yml$
-^\.pre-commit-hooks\.yaml$

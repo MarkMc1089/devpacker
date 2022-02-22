@@ -1,8 +1,0 @@
--   id: roxygen-dependencies
-    name: roxygen-dependencies
-    description: check and update roxygen dependencies in .pre-commit-config.yaml
-    entry: Rscript inst/hooks/exported/roxygen-dependencies.R
-    language: r
-    files: '^\.pre-commit-config.yaml$'
-    require_serial: true
-    minimum_pre_commit_version: "2.13.0"
