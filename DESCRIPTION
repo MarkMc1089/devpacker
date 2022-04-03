@@ -10,21 +10,16 @@ License: MIT + file LICENSE
 URL: https://github.com/MarkMc1089/devpacker
 BugReports: https://github.com/MarkMc1089/devpacker/issues
 Imports: 
-    gert,
-    gh,
-    glue,
-    precommit,
-    usethis,
-    utils,
-    withr,
-    git2r,
-    here,
-    fs
+    usethis (>= 2.1.5),
+    golem (>= 0.3.1),
+    withr (>= 2.4.3),
+    gert (>= 1.5.0),
+    gh (>= 1.3.0),
+    git2r (>= 0.29.0),
+    covr (>= 3.5.1),
+    precommit (>= 0.2.2)
 Suggests: 
-    covr,
-    testthat (>= 3.0.0),
-    lintr,
-    reticulate
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
