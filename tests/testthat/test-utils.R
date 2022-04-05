@@ -2,7 +2,7 @@ test_that("check_dependent_args", {
   number_of_args <- 4
   args <- expand.grid(rep(list(list(TRUE, FALSE)), number_of_args))
 
-  for (i in 1:nrow(args)) {
+  for (i in seq_len(nrow(args))) {
     expect_equal(
       check_dependent_args(args[[i, 1]], args[i, 2:number_of_args]),
       if (args[[i, 1]]) {

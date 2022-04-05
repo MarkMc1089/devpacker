@@ -22,11 +22,13 @@
 #' @return The path to the created package, invisibly.
 #'
 #' @export
+# Begin Exclude Linting
 create_shiny_dashboard <- function(path, use_git = TRUE, use_github = use_git,
                                    use_ci = use_github, use_precommit = use_ci,
                                    use_coverage = use_ci, use_lintr = TRUE,
                                    use_tests = TRUE, ..., open = FALSE,
                                    overwrite = FALSE) {
+  # End Exclude Linting
   stop("no")
   if (!check_create_package_args(as.list(environment())[2:5])) {
     return(invisible(FALSE))

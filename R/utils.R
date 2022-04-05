@@ -71,7 +71,7 @@ check_protocol <- function(protocol) {
 
 check_no_github_repo <- function(owner, repo) {
   repo_found <- tryCatch(
-    {
+    { # Exclude Linting
       gh::gh("/repos/{owner}/{repo}", owner = owner, repo = repo)
       TRUE
     },
