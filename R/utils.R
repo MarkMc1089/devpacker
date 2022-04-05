@@ -32,6 +32,37 @@ check_create_package_args <- function(args) {
 }
 
 
+is_package <- function(path) {
+  res <- tryCatch(
+    rprojroot::find_package_root_file(path = path),
+    error = function(e) NULL
+  )
+  !is.null(res)
+}
+
+
+is_non_empty_dir <- function(path) {
+  dir.exists(path) && length(list.files(path))
+}
+
+
+package_exists <- function(path) {
+  is_non_empty_dir(path) && is_package(path)
+}
+
+
+create_package_ <- function(path, open, creation_fun, ...) {
+  if (package_exists(path)) {
+    usethis::ui_stop("This package already exists. Create a copy and/or delete it first.")
+  }
+  create_success <- NULL
+  create_success <- creation_fun(path, ..., open = open)
+  if (is.null(create_success)) {
+    usethis::ui_stop("Unable to create package - aborting")
+  }
+}
+
+
 init_lintr <- function() {
   file.copy(system.file("config", "lintr", package = "devpacker"), ".")
   file.rename("lintr", ".lintr")
@@ -62,14 +93,17 @@ check_protocol <- function(protocol) {
   if (!rlang::is_string(protocol) || !(tolower(protocol) %in% c("https", "ssh"))) {
     options(usethis.protocol = NULL)
     usethis::ui_stop(
-      "{ui_code('protocol')} must be either {ui_value('https')} or {ui_value('ssh')}"
+      paste(
+        "{usethis::ui_code('protocol')} must be either {usethis::ui_value('https')}",
+        "or {usethis::ui_value('ssh')}"
+      )
     )
   }
   invisible(NULL)
 }
 
 
-check_no_github_repo <- function(owner, repo) {
+is_on_github <- function(owner, repo) {
   repo_found <- tryCatch(
     { # Exclude Linting
       gh::gh("/repos/{owner}/{repo}", owner = owner, repo = repo)
@@ -78,10 +112,9 @@ check_no_github_repo <- function(owner, repo) {
     http_error_404 = function(err) FALSE
   )
   if (!repo_found) {
-    return(invisible(NULL))
+    return(FALSE)
   }
-  owner_repo <- paste0("owner", "/", "repo") # Exclude Linting
-  usethis::ui_stop("Repo {ui_value(owner_repo)} already exists on GitHub!")
+  TRUE
 }
 
 
@@ -92,7 +125,7 @@ package_data <- function(path) {
 
 
 view_url <- function(url) {
-  usethis::ui_done("Opening URL {ui_value(url)}")
+  usethis::ui_done("Opening URL {usethis::ui_value(url)}")
   utils::browseURL(url)
   invisible(url)
 }
@@ -111,31 +144,82 @@ init_gh <- function(repo_name) {
     )
   }
   owner <- whoami$login
-
-  check_no_github_repo(owner, repo_name)
   repo_spec <- paste0(owner, "/", repo_name) # Exclude Linting
+
+  github_exists <- is_on_github(owner, repo_name)
+
+  if (github_exists) {
+    usethis::ui_stop("Repo {usethis::ui_value(repo_spec)} already exists on GitHub!")
+  }
+
   usethis::ui_done("Creating GitHub repository {usethis::ui_value(repo_spec)}")
   create <- gh::gh("POST /user/repos", name = repo_name)
   origin_url <- switch(protocol,
     https = create$clone_url,
     ssh = create$ssh_url
   )
-  withr::defer(view_url(create$html_url))
   usethis::ui_done(
     "Setting remote {usethis::ui_value('origin')} to {usethis::ui_value(origin_url)}"
   )
-  usethis::use_git_remote("origin", origin_url)
-  default_branch <- usethis::git_branch_default()
+  if (!length(usethis::git_remotes())) usethis::use_git_remote("origin", origin_url)
+  default_branch <- usethis::git_default_branch()
   remref <- paste0("origin/", default_branch) # Exclude Linting
   usethis::ui_done(
     "\n    Pushing {usethis::ui_value(default_branch)} branch to GitHub and setting
-     \n    {usethis::ui_value(remref)} as upstream branch"
+      \n    {usethis::ui_value(remref)} as upstream branch"
   )
   gert::git_push(remote = "origin", verbose = TRUE)
+
+  # Return url for GitHub repo to open later
+  create$html_url
+}
+
+
+init_readme <- function() {
+  usethis::use_readme_md(open = FALSE)
 }
 
 
 init_sample_files <- function(use_tests) {
   file.copy(system.file("basefiles", "functions.R", package = "devpacker"), "R")
   if (use_tests) usethis::use_test("functions", open = FALSE)
+}
+
+
+post_creation_steps <- function(path, use_git, use_github, use_ci, use_precommit,
+                                use_coverage, use_lintr, use_tests) {
+  usethis::local_project(path)
+
+  usethis::use_mit_license()
+
+  init_sample_files(use_tests = use_tests)
+
+  if (use_lintr) init_lintr()
+
+  if (use_git) init_git()
+
+  if (use_precommit) init_precommit()
+
+  if (use_github) {
+    gh_url <- init_gh(basename(path))
+    init_readme()
+  }
+
+  if (use_coverage) usethis::use_coverage()
+
+  if (use_ci) {
+    usethis::use_github_actions()
+    if (use_coverage) usethis::use_github_action("test-coverage")
+  }
+
+  if (use_git) {
+    gert::git_add(".")
+    status <- gert::git_status()
+    if (any(status$staged)) gert::git_commit("Additional initial config")
+  }
+
+  if (use_github) {
+    gert::git_push()
+    view_url(gh_url)
+  }
 }
