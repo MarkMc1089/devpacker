@@ -14,7 +14,8 @@ create_shiny_dashboard(
   use_lintr = TRUE,
   use_tests = TRUE,
   ...,
-  open = FALSE
+  open = FALSE,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -44,6 +45,8 @@ code coverage and use the Codecov service. By default takes value of \code{use_c
 \item{...}{Additional arguments passed to \code{golem::create_golem()}}
 
 \item{open}{Boolean. Open the created project?}
+
+\item{overwrite}{Boolean. Should the already existing project be overwritten ?}
 }
 \value{
 The path to the created package, invisibly.

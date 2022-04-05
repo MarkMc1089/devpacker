@@ -35,71 +35,16 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
 
   usethis::use_mit_license()
 
-  file.copy(system.file("basefiles", "functions.R", package = "devpacker"), "R")
-  if (use_tests) usethis::use_test("functions", open = FALSE)
+  init_sample_files(use_tests = use_tests)
 
-  if (use_lintr) {
-    file.copy(system.file("config", "lintr", package = "devpacker"), ".")
-    file.rename("lintr", ".lintr")
-    usethis::use_build_ignore(".lintr")
-  }
+  if (use_lintr) init_lintr()
 
-  if (use_git) {
-    gert::git_init()
-    usethis::use_git_ignore(".Rhistory")
-    gert::git_add(".")
-    gert::git_commit("Initial commit")
-  }
+  if (use_git) init_git()
 
-  if (use_precommit) {
-    precommit::use_precommit(
-      config_source = system.file(
-        "config", "pre-commit-config.yaml",
-        package = "devpacker"
-      ),
-      open = FALSE, ci = NA, root = usethis::proj_get()
-    )
-  }
-
-  use_gh <- function() {
-    protocol <- usethis::git_protocol()
-    usethis:::check_protocol(protocol)
-    whoami <- suppressMessages(gh::gh_whoami())
-    if (is.null(whoami)) {
-      usethis::ui_stop(
-        "\n      Unable to discover a GitHub personal access token
-         \n      A token is required in order to create and push to a new repo
-         \n      Call {usethis::ui_code('gh_token_help()')} for help configuring a token"
-      )
-    }
-    owner <- whoami$login
-    repo_name <- usethis:::project_name()
-    usethis:::check_no_github_repo(owner, repo_name, NULL)
-    repo_desc <- usethis:::package_data()$Title
-    repo_desc <- gsub("\n", " ", repo_desc)
-    repo_spec <- paste0(owner, "/", repo_name) # Exclude Linting
-    usethis::ui_done("Creating GitHub repository {usethis::ui_value(repo_spec)}")
-    create <- gh::gh("POST /user/repos", name = repo_name, description = repo_desc)
-    origin_url <- switch(protocol,
-      https = create$clone_url,
-      ssh = create$ssh_url
-    )
-    withr::defer(usethis:::view_url(create$html_url))
-    usethis::ui_done(
-      "Setting remote {usethis::ui_value('origin')} to {usethis::ui_value(origin_url)}"
-    )
-    usethis::use_git_remote("origin", origin_url)
-    default_branch <- usethis::git_branch_default()
-    remref <- paste0("origin/", default_branch) # Exclude Linting
-    usethis::ui_done(
-      "\n    Pushing {usethis::ui_value(default_branch)} branch to GitHub and setting
-       \n    {usethis::ui_value(remref)} as upstream branch"
-    )
-    gert::git_push(remote = "origin", verbose = TRUE)
-  }
+  if (use_precommit) init_precommit()
 
   if (use_github) {
-    use_gh()
+    init_gh(basename(path))
     usethis::use_readme_md(open = FALSE)
   }
 
@@ -110,7 +55,7 @@ create_package <- function(path, use_git = TRUE, use_github = use_git,
     if (use_coverage) usethis::use_github_action("test-coverage")
   }
 
-  if (use_git) {
+  if (use_git && any(use_github, use_ci, use_coverage)) {
     gert::git_add(".")
     gert::git_commit("Additional initial config")
   }
