@@ -21,7 +21,9 @@ Imports:
     usethis (>= 2.1.5)
 Suggests: 
     covr (>= 3.5.1),
-    testthat (>= 3.0.0)
+    reticulate,
+    testthat (>= 3.0.0),
+    withr
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
