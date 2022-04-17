@@ -1,7 +1,7 @@
 
 # devpacker
 
-_Initialise A Blank R Package With Good Practice Configuration_
+_Initialise A Blank R Package Or Shiny Dashboard With Good Practice Configuration_
 
 `devpacker` aims to provide a solid foundation for building an R package, ready to go with test directories, continuous integration and various other development best practices configured.
 
@@ -12,39 +12,27 @@ _Initialise A Blank R Package With Good Practice Configuration_
 [![Codecov test coverage](https://codecov.io/gh/MarkMc1089/devpacker/branch/master/graph/badge.svg)](https://codecov.io/gh/MarkMc1089/devpacker?branch=master)
 <!-- badges: end -->
 
-## Requirements
-```
-devtools
-usethis
-roxygen2
-precommit
-reticulate (for miniconda, used by precommit)
-lintr
-styler
-covr
-```
-
 ## 'I Want it All!' Project Setup
 
-Given a `path`, `createpackage()` will create an R package. The actions taken are:
+Given a `path`, `create_package` will create an R package and `create_shiny` will create a Shiny app as a package. The actions taken are:
 
-1. Call `usethis::create_package()` with `path`, using default arguments.
-2. Uses `gert` to initialise a git repo.
-3. Adds the MIT license.
-4. Creates a sample R file `functions.R`, which includes a `roxygen` documentation block.
-5. Adds `testthat` folders and files.
-6. Adds a `lintr` configuration.
-7. Sets up `precommit`, to run automated checks before commits can succeed.
-8. Creates a remote repo on GitHub and pushes the package.
-9. Adds a README.
-10. Sets up code coverage with `covr`, to use the codecov service.
-11. Adds GitHub Actions for running R CMD CHECK and code coverage report on commits. Badges for these are added to the README.
+1. Call `usethis::create_package` or `golem::v=create_golem` with `path`, using default arguments.
+2. Use `gert` to initialise a git repo.
+3. Add the MIT license.
+4. Create a sample R file `functions.R`, which includes a `roxygen` documentation block.
+5. Add `testthat` folders and files.
+6. Add a `lintr` configuration.
+7. Set up `precommit`, to run automated checks before commits can succeed.
+8. Create a remote repo on GitHub and pushes the package.
+9. Add a README.
+10. Set up code coverage with `covr`, to use the codecov service.
+11. Add GitHub Actions for running R CMD CHECK and code coverage report on commits. Badges for these are added to the README.
 12. A final push to GitHub is made.
 
 ## Custom Project Setup
 
 ```
-create_package(
+create_package(            # Or create_shiny
   path,                    # A path, whose final folder will be the package name
   use_git = TRUE,          # initialise and commit everything to a local git repository
   use_github = use_git,    # create and push to a new repository on Github, along with a starting README
@@ -99,10 +87,11 @@ devtools::install.git_hub("MarkMc1089/devpacker")
 
 ## Usage
 
-Simply run the below, ensuring you name the last folder on the path what you want the package to be called:
+Simply run one of the below, ensuring you name the last folder on the path what you want the package to be called:
 
 ``` r
-devpacker::createpackage("path/to/new/package")
+devpacker::create_package("path/to/new/package")
+devpacker::create_shiny_app("path/to/new/app")
 ```
 
 ## TODO
@@ -111,5 +100,5 @@ devpacker::createpackage("path/to/new/package")
 - [x] Add configuration - currently there is none.
 - [x] Automate the updating of roxygen dependencies for `precommit`. DONE IN FORK OF [lorenzwalthert/precommit](https://github.com/lorenzwalthert/precommit)
 - [ ] Use the templating functions of `usethis` to handle various config files used.
-- [ ] Extend the package by adding a similar function for `shiny`, making use of best practices like modules and tools like `golem`.
+- [X] Extend the package by adding a similar function for `shiny`, making use of best practices like modules and tools like `golem`.
 - [ ] Increase test coverage.
