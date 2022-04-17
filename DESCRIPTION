@@ -1,6 +1,6 @@
 Package: devpacker
 Title: Initialise A Blank R Package Or Shiny Dashboard With Good Practice Configuration
-Version: 0.0.0.9005
+Version: 0.0.0.9006
 Authors@R: 
     person("Mark", "McPherson", , "mark.mcpherson1@nhs.net", role = c("aut", "cre"))
 Description: Initialise a blank R package or Shiny dashboard with test directories,

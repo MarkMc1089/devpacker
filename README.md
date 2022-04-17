@@ -1,9 +1,9 @@
 
 # devpacker
 
-_Initialise A Blank R Package Or Shiny Dashboard With Good Practice Configuration_
+_Initialise A Blank R Package Or {shiny} App With Good Practice Configuration_
 
-`devpacker` aims to provide a solid foundation for building an R package, ready to go with test directories, continuous integration and various other development best practices configured.
+`devpacker` aims to provide a solid foundation for building an R package or `{shiny}` app, ready to go with test directories, continuous integration and various other development best practices configured.
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -12,24 +12,42 @@ _Initialise A Blank R Package Or Shiny Dashboard With Good Practice Configuratio
 [![Codecov test coverage](https://codecov.io/gh/MarkMc1089/devpacker/branch/master/graph/badge.svg)](https://codecov.io/gh/MarkMc1089/devpacker?branch=master)
 <!-- badges: end -->
 
-## 'I Want it All!' Project Setup
+## Installation
 
-Given a `path`, `create_package` will create an R package and `create_shiny` will create a Shiny app as a package. The actions taken are:
+You can install `devpacker` from this repository with:
 
-1. Call `usethis::create_package` or `golem::v=create_golem` with `path`, using default arguments.
-2. Use `gert` to initialise a git repo.
+``` r
+devtools::install.git_hub("MarkMc1089/devpacker")
+```
+
+## Usage
+
+Simply run one of the below, ensuring you name the last folder on the path what you want the package to be called:
+
+``` r
+devpacker::create_package("path/to/new/package")
+devpacker::create_shiny("path/to/new/app")
+```
+
+
+### 'I Want it All!' Project Setup
+
+Given a `path`, `create_package` will create an R package and `create_shiny` will create a `{shiny}` app as a package. The actions taken are:
+
+1. Call `usethis::create_package` or `golem::create_golem` with `path`, using default arguments.
+2. Use `{gert}` to initialise a git repo.
 3. Add the MIT license.
-4. Create a sample R file `functions.R`, which includes a `roxygen` documentation block.
-5. Add `testthat` folders and files.
-6. Add a `lintr` configuration.
-7. Set up `precommit`, to run automated checks before commits can succeed.
+4. Create a sample R file `functions.R`, which includes a `{roxygen2}` documentation block.
+5. Add `{testthat}` folders and files.
+6. Add a `{lintr}` configuration.
+7. Set up `{precommit}`, to run automated checks before commits can succeed.
 8. Create a remote repo on GitHub and pushes the package.
 9. Add a README.
-10. Set up code coverage with `covr`, to use the codecov service.
+10. Set up code coverage with `{covr}`, to use the codecov service.
 11. Add GitHub Actions for running R CMD CHECK and code coverage report on commits. Badges for these are added to the README.
 12. A final push to GitHub is made.
 
-## Custom Project Setup
+### Custom Project Setup
 
 ```
 create_package(            # Or create_shiny
@@ -41,12 +59,17 @@ create_package(            # Or create_shiny
   use_coverage = use_ci,   # set up code coverage; if using GitHub, adds a CI action using Codecov service
   use_lintr = TRUE,        # set up lintr
   use_tests = TRUE,        # set up testthat
-  fields = list(),         # usethis option for setting DESCRIPTION fields - for better option see below
-  roxygen = TRUE,          # usethis option to use roxygen (for automating a lot of documentation tasks)
-  check_name = TRUE,       # usethis option to check valid name for CRAN
+  fields = list(),         # {usethis} option for setting DESCRIPTION fields - for better option see below
+  roxygen = TRUE,          # {usethis} option to use roxygen (for automating a lot of documentation tasks)
+  check_name = TRUE,       # {usethis} option to check valid name for CRAN
   open = FALSE             # set to TRUE if you want to immediately open your new project
+  project_hook = {hook}    # For create_shiny only; allows to pass a custom project_hook "hook" to {golem}
 )
 ```
+
+#### Using a custom `project_hook` with `create_shiny`
+
+See `vignette("f_extending_golem", package = "golem")` for details of customising what `{golem}` creates.
 
 ## Setting Default DESCRIPTION Fields
 
@@ -75,30 +98,12 @@ options(
 5. When using a package for the first time - `usethis::use_package("packagename")` to add it to imports in `DESCRIPTION`.
 6. Use functions from packages by pre-pending them with `packagename::`, or, especially if you use a lot of functions from a package, add `@import packagename` into the roxygen documentation block of a function to avoid need for the `::` syntax.
 7. Regularly commit to git, at least locally. This is just good practice anyway, but with `precommit` running automated tests and styling your code consistently regular committing helps to prevent the complexity of having to resolve many bugs all in one go!
-8. ~~There is a step that is needed to keep the `pre-commit_config.yaml` up to date. Any packages that your package imports need to be added to this. Use `precommit::snippet_generate('additional-deps-roxygenize')` to generate the needed config before committing, if you have added any packages since last commit.~~ A precommit hook now takes care of this.
-
-## Installation
-
-You can install `devpacker` from this repository with:
-
-``` r
-devtools::install.git_hub("MarkMc1089/devpacker")
-```
-
-## Usage
-
-Simply run one of the below, ensuring you name the last folder on the path what you want the package to be called:
-
-``` r
-devpacker::create_package("path/to/new/package")
-devpacker::create_shiny_app("path/to/new/app")
-```
 
 ## TODO
 
-- [x] Add  some tests.
-- [x] Add configuration - currently there is none.
-- [x] Automate the updating of roxygen dependencies for `precommit`. DONE IN FORK OF [lorenzwalthert/precommit](https://github.com/lorenzwalthert/precommit)
-- [ ] Use the templating functions of `usethis` to handle various config files used.
-- [X] Extend the package by adding a similar function for `shiny`, making use of best practices like modules and tools like `golem`.
+- [x] Add some tests.
+- [x] Add configuration options.
+- [x] Automate the updating of roxygen dependencies for `{precommit}`. DONE IN FORK OF [lorenzwalthert/precommit](https://github.com/lorenzwalthert/precommit)
+- [ ] Use the templating functions of `{usethis}` to handle various config files used.
+- [X] Extend the package by adding a similar function for `{shiny}`, making use of best practices like modules and tools like `{golem}`.
 - [ ] Increase test coverage.
