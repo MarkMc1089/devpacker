@@ -1,6 +1,6 @@
 Package: devpacker
 Title: Initialise A Blank R Package Or Shiny Dashboard With Good Practice Configuration
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: 
     person("Mark", "McPherson", , "mark.mcpherson1@nhs.net", role = c("aut", "cre"))
 Description: Initialise a blank R package or Shiny dashboard with test directories,
@@ -21,9 +21,7 @@ Imports:
     usethis (>= 2.1.5)
 Suggests: 
     covr (>= 3.5.1),
-    reticulate,
-    testthat (>= 3.0.0),
-    withr
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
